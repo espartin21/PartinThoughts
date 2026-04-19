@@ -1,0 +1,75 @@
+---
+import Base from "./Base.astro";
+import ReadingProgress from "../components/ReadingProgress.astro";
+
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  prev?: { id: string; title: string } | null;
+  next?: { id: string; title: string } | null;
+}
+
+const { post, prev, next } = Astro.props;
+const { title, date, tag, excerpt } = post.data;
+const readTime = Math.max(1, Math.ceil(post.body!.split(/\s+/).length / 250));
+const dateLabel = date.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+---
+
+<Base title={title} description={excerpt}>
+  <main class="page">
+    <article class="article">
+      <div class="shell shell--narrow">
+        <a href="/" class="article-back">&larr; Partin Thoughts</a>
+
+        <div class="article-meta">
+          <span>{dateLabel}</span>
+          <span class="dot"></span>
+          <span class="tag">{tag}</span>
+          <span class="dot"></span>
+          <span>{readTime} min read</span>
+        </div>
+
+        <h1 class="article-h">{title}</h1>
+
+        <div class="prose">
+          <p class="article-lede">{excerpt}</p>
+          <slot />
+        </div>
+
+        <div class="article-foot">
+          <span>Filed under #{tag}</span>
+          <span>Thank you for reading.</span>
+        </div>
+
+        {
+          (prev || next) && (
+            <div class="article-next">
+              {prev ? (
+                <a href={`/p/${prev.id}/`}>
+                  <div class="lbl">&larr; Older</div>
+                  <div class="ttl">{prev.title}</div>
+                </a>
+              ) : (
+                <div />
+              )}
+              {next ? (
+                <a href={`/p/${next.id}/`} style="text-align: right;">
+                  <div class="lbl">Newer &rarr;</div>
+                  <div class="ttl">{next.title}</div>
+                </a>
+              ) : (
+                <div />
+              )}
+            </div>
+          )
+        }
+      </div>
+    </article>
+  </main>
+  <ReadingProgress />
+</Base>

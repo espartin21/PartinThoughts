@@ -1,0 +1,28 @@
+---
+interface PostEntry {
+  id: string;
+  title: string;
+  dateLabel: string;
+  tag: string;
+}
+
+interface Props {
+  posts: PostEntry[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="feed-list">
+  {
+    posts.map((p) => (
+      <li class="feed-item">
+        <a href={`/p/${p.id}/`} class="feed-link" data-preview-slug={p.id}>
+          <span class="feed-date">{p.dateLabel}</span>
+          <h3 class="feed-title">{p.title}</h3>
+          <span class="feed-tag">{p.tag}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

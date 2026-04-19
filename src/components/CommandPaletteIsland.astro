@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import CommandPalette from "./CommandPalette";
+import { TAGS } from "../types";
+
+const posts = await getCollection("posts");
+const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const items = [
+  { kind: "page", title: "Home", href: "/", excerpt: "Latest essays" },
+  { kind: "page", title: "Archive", href: "/archive/", excerpt: "All posts by year" },
+  { kind: "page", title: "Tags", href: "/tags/", excerpt: "Filter by topic" },
+  { kind: "page", title: "About", href: "/about/", excerpt: "Who writes this" },
+  ...sortedPosts.map((p) => ({
+    kind: "essay",
+    title: p.data.title,
+    href: `/p/${p.id}/`,
+    excerpt: p.data.excerpt,
+    hay: `${p.data.title} ${p.data.excerpt} ${p.data.tag}`.toLowerCase(),
+  })),
+  ...TAGS.map((t) => ({
+    kind: "tag",
+    title: `#${t}`,
+    href: `/tags/${t}/`,
+    excerpt: "Filter by tag",
+    hay: t,
+  })),
+];
+---
+
+<CommandPalette client:load items={items} />

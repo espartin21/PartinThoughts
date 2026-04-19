@@ -1,0 +1,56 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PostList from "../../components/PostList.astro";
+import { TAGS } from "../../types";
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+const counts: Record<string, number> = { all: posts.length };
+for (const p of posts) {
+  counts[p.data.tag] = (counts[p.data.tag] || 0) + 1;
+}
+
+const allEntries = posts.map((p) => ({
+  id: p.id,
+  title: p.data.title,
+  dateLabel: fmt(p.data.date),
+  tag: p.data.tag,
+}));
+---
+
+<Base title="Tags" activeNav="tags">
+  <main class="page">
+    <section class="page-head">
+      <div class="shell">
+        <div class="page-eyebrow">Browse by tag</div>
+        <h1 class="page-h">Topics I keep returning to.</h1>
+        <p class="page-sub">Loose categories. A single essay is rarely only one thing.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        <div class="tagbar">
+          <a href="/tags/" class="tagchip" data-active="true">
+            all <span class="count">{counts.all}</span>
+          </a>
+          {
+            TAGS.map((t) => (
+              <a href={`/tags/${t}/`} class="tagchip" data-active="false">
+                #{t} <span class="count">{counts[t] || 0}</span>
+              </a>
+            ))
+          }
+        </div>
+
+        <PostList posts={allEntries} />
+      </div>
+    </section>
+  </main>
+</Base>

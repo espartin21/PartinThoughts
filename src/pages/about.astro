@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+import { META } from "../types";
+---
+
+<Base title="About" activeNav="about">
+  <main class="page">
+    <section class="about">
+      <div class="shell shell--narrow">
+        <div class="about-photo">EP</div>
+        <h1>About this place, and the person writing it.</h1>
+        <div class="prose">
+          <p>
+            Hi. I'm {META.author}. This is a small corner of the internet where I think out loud
+            &mdash; about the work I do, the life I'm living around it, and the odd observations
+            that don't fit anywhere else.
+          </p>
+          <p>
+            I've worked in and around product teams for most of the last decade, which means I've
+            accumulated a lot of opinions about meetings, tools, and the specific flavor of
+            exhaustion that comes from too many open tabs. I write about that sometimes. I also
+            write about cooking, about moving cities, about the kind of quiet that's hard to come
+            by, and about what I'm learning to pay attention to.
+          </p>
+          <p>
+            The goal is not reach. The goal is to have a record &mdash; something I can read back in
+            five years and recognize. If you find your way here and something lands, that's the
+            bonus round.
+          </p>
+          <p>
+            Posts go out when they go out. There's no schedule. You can subscribe by{" "}
+            <a href="/rss.xml">RSS</a> or <a href="#">email</a> if you'd like a nudge.
+          </p>
+        </div>
+
+        <div class="about-links">
+          <a href="#">Email <span class="arr">&rarr;</span></a>
+          <a href="/rss.xml">RSS <span class="arr">&rarr;</span></a>
+          <a href="#">Are.na <span class="arr">&rarr;</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

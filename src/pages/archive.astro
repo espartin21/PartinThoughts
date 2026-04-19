@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import PostList from "../components/PostList.astro";
+import { META } from "../types";
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+const byYear: Record<number, { id: string; title: string; dateLabel: string; tag: string }[]> = {};
+for (const p of posts) {
+  const y = p.data.date.getFullYear();
+  if (!byYear[y]) byYear[y] = [];
+  byYear[y].push({
+    id: p.id,
+    title: p.data.title,
+    dateLabel: fmt(p.data.date),
+    tag: p.data.tag,
+  });
+}
+const years = Object.keys(byYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Base title="Archive" activeNav="archive">
+  <main class="page">
+    <section class="page-head">
+      <div class="shell">
+        <div class="page-eyebrow">Archive</div>
+        <h1 class="page-h">Everything, by year.</h1>
+        <p class="page-sub">
+          {posts.length} essays since {META.since}. The older ones I still stand behind are marked
+          in the year pages.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        {
+          years.map((y) => (
+            <div class="year-block">
+              <div class="year-head">
+                <div class="year-num">{y}</div>
+                <div class="year-count">
+                  {byYear[y].length} {byYear[y].length === 1 ? "post" : "posts"}
+                </div>
+              </div>
+              <PostList posts={byYear[y]} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</Base>
