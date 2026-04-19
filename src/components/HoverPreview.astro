@@ -1,0 +1,70 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+const previewData = posts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map((p) => ({
+    slug: p.id,
+    title: p.data.title,
+    tag: p.data.tag,
+    excerpt: p.data.excerpt,
+    dateLabel: p.data.date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }),
+    read: Math.max(1, Math.ceil((p.body?.split(/\s+/).length ?? 0) / 250)),
+  }));
+---
+
+<script define:vars={{ previewData }}>
+  function initHoverPreview() {
+    const el = document.getElementById("preview");
+    if (!el) return;
+    let hideT;
+
+    function handleEnter(e) {
+      const t = e.target.closest("[data-preview-slug]");
+      if (!t) return;
+      const slug = t.getAttribute("data-preview-slug");
+      const post = previewData.find((p) => p.slug === slug);
+      if (!post) return;
+      clearTimeout(hideT);
+      el.innerHTML = `
+        <div class="pv-meta">${post.dateLabel} · ${post.tag} · ${post.read} min read</div>
+        <div class="pv-title">${post.title}</div>
+        <div class="pv-excerpt">${post.excerpt}</div>
+      `;
+      positionPreview(t);
+      el.setAttribute("data-visible", "true");
+    }
+
+    function handleLeave(e) {
+      if (!e.target.closest) return;
+      const t = e.target.closest("[data-preview-slug]");
+      if (!t) return;
+      hideT = setTimeout(() => el.setAttribute("data-visible", "false"), 80);
+    }
+
+    function positionPreview(target) {
+      const r = target.getBoundingClientRect();
+      const pw = 320,
+        ph = 120;
+      let x = r.right + 12;
+      let y = r.top;
+      if (x + pw > window.innerWidth - 16) x = r.left - pw - 12;
+      if (x < 8) x = Math.min(r.left, window.innerWidth - pw - 16);
+      if (y + ph > window.innerHeight - 16) y = window.innerHeight - ph - 16;
+      if (y < 8) y = 8;
+      el.style.left = x + "px";
+      el.style.top = y + "px";
+    }
+
+    document.addEventListener("mouseover", handleEnter);
+    document.addEventListener("mouseout", handleLeave);
+  }
+
+  initHoverPreview();
+  document.addEventListener("astro:after-swap", initHoverPreview);
+</script>

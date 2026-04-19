@@ -1,0 +1,25 @@
+<script>
+  function initProgress() {
+    const bar = document.getElementById("progress");
+    if (!bar) return;
+
+    bar.setAttribute("data-visible", "true");
+
+    function onScroll() {
+      const article = document.querySelector(".article");
+      if (!article) return;
+      const rect = article.getBoundingClientRect();
+      const total = article.scrollHeight - window.innerHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const pct = Math.min(100, Math.max(0, (scrolled / Math.max(1, total)) * 100));
+      bar!.style.width = pct + "%";
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+  }
+
+  initProgress();
+  document.addEventListener("astro:after-swap", initProgress);
+</script>

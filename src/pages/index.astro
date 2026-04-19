@@ -1,0 +1,62 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import PostList from "../components/PostList.astro";
+import { META } from "../types";
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const featured = posts[0];
+const rest = posts.slice(1, 9);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+const featuredRead = Math.max(1, Math.ceil((featured.body?.split(/\s+/).length ?? 0) / 250));
+
+const restEntries = rest.map((p) => ({
+  id: p.id,
+  title: p.data.title,
+  dateLabel: fmt(p.data.date),
+  tag: p.data.tag,
+}));
+---
+
+<Base>
+  <main class="page">
+    <section class="hero">
+      <div class="shell">
+        <div class="hero-eyebrow">Essays &middot; Notes &middot; Observations</div>
+        <h1 class="hero-h">
+          Writing slowly, <em>in public</em>, on whatever is holding my attention.
+        </h1>
+        <p class="hero-sub">{META.bio} Updated irregularly, read at leisure.</p>
+      </div>
+    </section>
+
+    <section class="featured">
+      <div class="shell">
+        <a href={`/p/${featured.id}/`} class="featured-card" data-preview-slug={featured.id}>
+          <div class="featured-meta">
+            <span>Featured &middot; {fmt(featured.data.date)}</span>
+            <span class="tag">{featured.data.tag} &middot; {featuredRead} min</span>
+          </div>
+          <h2 class="featured-h">{featured.data.title}</h2>
+          <p class="featured-dek">{featured.data.excerpt}</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="feed">
+      <div class="shell">
+        <div class="feed-head">
+          <span>Recent</span>
+          <a href="/archive/">All posts &rarr;</a>
+        </div>
+        <PostList posts={restEntries} />
+      </div>
+    </section>
+  </main>
+</Base>

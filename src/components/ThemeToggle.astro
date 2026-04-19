@@ -1,0 +1,27 @@
+<script>
+  function initThemeToggle() {
+    const btn = document.querySelector("[data-theme-toggle]");
+    if (!btn) return;
+
+    function updateIcon() {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      const moon = btn!.querySelector(".icon-moon") as HTMLElement;
+      const sun = btn!.querySelector(".icon-sun") as HTMLElement;
+      if (moon) moon.style.display = isDark ? "none" : "";
+      if (sun) sun.style.display = isDark ? "" : "none";
+    }
+
+    btn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("pt-theme", next);
+      updateIcon();
+    });
+
+    updateIcon();
+  }
+
+  initThemeToggle();
+  document.addEventListener("astro:after-swap", initThemeToggle);
+</script>
