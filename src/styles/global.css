@@ -407,6 +407,16 @@ kbd {
   gap: 16px;
   flex-wrap: wrap;
 }
+.foot .shell {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.foot-links {
+  display: flex;
+  gap: 18px;
+}
 .foot a {
   transition: color 180ms var(--ease);
 }
@@ -569,6 +579,9 @@ kbd {
 .article-next a:hover {
   border-color: var(--ink-soft);
   transform: translateY(-2px);
+}
+.article-next--newer {
+  text-align: right;
 }
 .article-next .lbl {
   font-family: var(--mono);
