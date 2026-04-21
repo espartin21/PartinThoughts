@@ -32,7 +32,7 @@ const { activeNav = "" } = Astro.props;
             <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
           </svg>
           <span>Search</span>
-          <kbd>&#8984;K</kbd>
+          <kbd data-shortcut-label>&#8984;K</kbd>
         </button>
         <button class="iconbtn" data-theme-toggle aria-label="Toggle theme">
           <svg
@@ -66,3 +66,11 @@ const { activeNav = "" } = Astro.props;
     </div>
   </div>
 </header>
+
+<script>
+  if (!/Mac|iPhone|iPad/.test(navigator.userAgent)) {
+    document.querySelectorAll("[data-shortcut-label]").forEach((el) => {
+      el.textContent = "Ctrl+K";
+    });
+  }
+</script>

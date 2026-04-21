@@ -12,6 +12,8 @@ interface Props {
   items: PaletteItem[];
 }
 
+const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.userAgent);
+
 export default function CommandPalette({ items }: Props) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
@@ -49,7 +51,6 @@ export default function CommandPalette({ items }: Props) {
   // Global keyboard shortcuts
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      const isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
       const mod = isMac ? e.metaKey : e.ctrlKey;
       if (mod && e.key.toLowerCase() === "k") {
         e.preventDefault();
@@ -104,7 +105,7 @@ export default function CommandPalette({ items }: Props) {
       <div className="palette-backdrop" onClick={() => setOpen(false)} />
       <div className="palette-panel" role="dialog" aria-label="Search">
         <div className="palette-input-wrap">
-          <span className="palette-kbd">&#8984;K</span>
+          <span className="palette-kbd">{isMac ? "\u2318K" : "Ctrl+K"}</span>
           <input
             ref={inputRef}
             placeholder="Search essays, tags, pages…"

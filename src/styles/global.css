@@ -198,12 +198,14 @@ kbd {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ink-mute);
   padding: 6px 10px 6px 8px;
   border: 1px solid var(--line);
   border-radius: 7px;
   background: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition:
     border-color 180ms var(--ease),
     color 180ms var(--ease);
@@ -217,7 +219,7 @@ kbd {
   height: 13px;
 }
 .searchbtn kbd {
-  font-size: 10px;
+  font-size: 11px;
   padding: 1px 5px;
 }
 
@@ -858,10 +860,11 @@ kbd {
 .palette-kbd {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--ink-mute);
+  color: var(--ink-soft);
   border: 1px solid var(--line);
   padding: 2px 6px;
   border-radius: 4px;
+  background: var(--bg-elev);
 }
 #palette-input {
   flex: 1;
@@ -879,10 +882,11 @@ kbd {
 .palette-close {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--ink-mute);
+  color: var(--ink-soft);
   border: 1px solid var(--line);
   padding: 2px 6px;
   border-radius: 4px;
+  background: var(--bg-elev);
 }
 .palette-results {
   list-style: none;
