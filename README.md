@@ -1,6 +1,6 @@
 # Partin Thoughts
 
-A place to share my parting thoughts. A personal blog built with [Astro](https://astro.build) — personal essays, working notes, and stray observations.
+A place to share my parting thoughts. A personal blog built with [Astro](https://astro.build) — personal essays, borrowed wisdom, and observations from the ordinary.
 
 ## Getting started
 
