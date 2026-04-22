@@ -2,6 +2,7 @@
 import Base from "./Base.astro";
 import ReadingProgress from "../components/ReadingProgress.astro";
 
+import { readTime } from "../utils";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 
 const { post, prev, next } = Astro.props;
 const { title, date, tag, excerpt } = post.data;
-const readTime = Math.max(1, Math.ceil(post.body!.split(/\s+/).length / 250));
+const postReadTime = readTime(post.body);
 const dateLabel = date.toLocaleDateString("en-US", {
   month: "short",
   day: "numeric",
@@ -31,7 +32,7 @@ const dateLabel = date.toLocaleDateString("en-US", {
           <span class="dot"></span>
           <span class="tag">{tag}</span>
           <span class="dot"></span>
-          <span>{readTime} min read</span>
+          <span>{postReadTime} min read</span>
         </div>
 
         <h1 class="article-h">{title}</h1>

@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import PostList from "../../components/PostList.astro";
 import { TAGS, type Tag } from "../../types";
+import { readTime } from "../../utils";
 
 export function getStaticPaths() {
   return TAGS.map((tag) => ({ params: { tag } }));
@@ -28,6 +29,7 @@ const entries = posts.map((p) => ({
   title: p.data.title,
   dateLabel: fmt(p.data.date),
   tag: p.data.tag,
+  readTime: readTime(p.body),
 }));
 ---
 

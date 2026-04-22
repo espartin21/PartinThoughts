@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import PostList from "../components/PostList.astro";
 import { META } from "../types";
+import { readTime } from "../utils";
 
 const posts = (await getCollection("posts")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
@@ -11,15 +12,21 @@ const posts = (await getCollection("posts")).sort(
 const fmt = (d: Date) =>
   d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-const byYear: Record<number, { id: string; title: string; dateLabel: string; tag: string }[]> = {};
+const byYear: Record<
+  number,
+  { id: string; title: string; dateLabel: string; tag: string; readTime: number }[]
+> = {};
 for (const p of posts) {
   const y = p.data.date.getFullYear();
-  if (!byYear[y]) byYear[y] = [];
+  if (!byYear[y]) {
+    byYear[y] = [];
+  }
   byYear[y].push({
     id: p.id,
     title: p.data.title,
     dateLabel: fmt(p.data.date),
     tag: p.data.tag,
+    readTime: readTime(p.body),
   });
 }
 const years = Object.keys(byYear)
