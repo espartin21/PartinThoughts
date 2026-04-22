@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import CommandPaletteIsland from "../components/CommandPaletteIsland.astro";
 import HoverPreview from "../components/HoverPreview.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
+import { META } from "../types";
 
 interface Props {
   title?: string;
@@ -12,13 +13,9 @@ interface Props {
   activeNav?: string;
 }
 
-const {
-  title = "Partin Thoughts",
-  description = "Personal essays, borrowed wisdom, and observations from the ordinary.",
-  activeNav = "",
-} = Astro.props;
+const { title = META.name, description = META.bio, activeNav = "" } = Astro.props;
 
-const fullTitle = title === "Partin Thoughts" ? title : `${title} — Partin Thoughts`;
+const fullTitle = title === META.name ? title : `${title} — ${META.name}`;
 ---
 
 <!doctype html>
