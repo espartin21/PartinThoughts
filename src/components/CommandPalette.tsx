@@ -39,6 +39,8 @@ export default function CommandPalette({ items }: Props) {
 
   const closePalette = useCallback(() => {
     setClosing(true);
+    setQ("");
+    setIdx(0);
     setTimeout(() => {
       setOpen(false);
       setClosing(false);

@@ -931,10 +931,10 @@ kbd {
   white-space: nowrap;
 }
 .palette-results li[aria-selected="true"] {
-  background: var(--bg-elev);
+  background: var(--line-soft);
 }
 .palette-results li:hover {
-  background: var(--bg-elev);
+  background: var(--line-soft);
 }
 .palette-results li .title {
   flex: 1;
