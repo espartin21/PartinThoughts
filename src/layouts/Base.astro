@@ -14,7 +14,7 @@ interface Props {
 
 const {
   title = "Partin Thoughts",
-  description = "Personal essays, working notes, and stray observations by E. Partin.",
+  description = "Personal essays, borrowed wisdom, and observations from the ordinary.",
   activeNav = "",
 } = Astro.props;
 
@@ -30,6 +30,7 @@ const fullTitle = title === "Partin Thoughts" ? title : `${title} — Partin Tho
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title="Partin Thoughts" href="/rss.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
