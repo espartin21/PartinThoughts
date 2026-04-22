@@ -170,6 +170,7 @@ export default function CommandPalette({ items }: Props) {
           <span className="palette-kbd">{isMac ? "\u2318K" : "Ctrl+K"}</span>
           <input
             ref={inputRef}
+            aria-label="Search essays, tags, pages"
             placeholder="Search essays, tags, pages…"
             autoComplete="off"
             value={q}
@@ -192,13 +193,21 @@ export default function CommandPalette({ items }: Props) {
             esc
           </button>
         </div>
-        <ul className="palette-results">
+        <div className="sr-only" aria-live="polite" role="status">
+          {q.trim()
+            ? filtered.length === 0
+              ? `No results for ${q}`
+              : `${filtered.length} result${filtered.length === 1 ? "" : "s"}`
+            : ""}
+        </div>
+        <ul className="palette-results" role="listbox">
           {filtered.length === 0 ? (
             <li className="empty">No matches for &ldquo;{q}&rdquo;</li>
           ) : (
             filtered.map((it, i) => (
               <li
                 key={it.href}
+                role="option"
                 aria-selected={i === idx}
                 onClick={() => {
                   closePalette();

@@ -21,7 +21,7 @@ const dateLabel = date.toLocaleDateString("en-US", {
 ---
 
 <Base title={title} description={excerpt}>
-  <main class="page">
+  <main id="main" class="page">
     <article class="article">
       <div class="shell shell--narrow">
         <a href="/" class="article-back">&larr; Partin Thoughts</a>
@@ -48,7 +48,7 @@ const dateLabel = date.toLocaleDateString("en-US", {
 
         {
           (prev || next) && (
-            <div class="article-next">
+            <nav aria-label="Adjacent posts" class="article-next">
               {prev ? (
                 <a href={`/p/${prev.id}/`}>
                   <div class="lbl">&larr; Older</div>
@@ -65,7 +65,7 @@ const dateLabel = date.toLocaleDateString("en-US", {
               ) : (
                 <div />
               )}
-            </div>
+            </nav>
           )
         }
       </div>
