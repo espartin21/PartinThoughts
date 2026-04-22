@@ -1,0 +1,56 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Colophon">
+  <main class="page">
+    <section class="about">
+      <div class="shell shell--narrow">
+        <h1>How this site is built.</h1>
+        <div class="prose">
+          <p>
+            This site is built with <a
+              href="https://astro.build"
+              target="_blank"
+              rel="noopener noreferrer">Astro</a
+            >, a static site generator that ships pure HTML with zero client JavaScript by default.
+            Where interactivity is needed, small React components hydrate on the client &mdash; an
+            approach Astro calls islands.
+          </p>
+          <p>
+            Typography is set in <a
+              href="https://rsms.me/inter/"
+              target="_blank"
+              rel="noopener noreferrer">Inter Tight</a
+            > for body and display text, with <a
+              href="https://www.jetbrains.com/lp/mono/"
+              target="_blank"
+              rel="noopener noreferrer">JetBrains Mono</a
+            > for code and interface labels. Both are served via Google Fonts.
+          </p>
+          <p>
+            Colors use the OKLCH color space for perceptual uniformity across light and dark themes.
+            Theme preference is saved to <code>localStorage</code> and applied before first paint to avoid
+            flash.
+          </p>
+          <p>
+            Posts are Markdown files with typed frontmatter validated by Zod at build time. The site
+            compiles to static HTML &mdash; no server, no database, no runtime.
+          </p>
+          <p>
+            Code quality is maintained with TypeScript, ESLint, and Prettier. Commits follow
+            conventional commit format, enforced by Husky and commitlint.
+          </p>
+          <p>
+            The source is public. Found a bug or have a suggestion?
+            <a
+              href="https://github.com/espartin21/PartinThoughts/issues"
+              target="_blank"
+              rel="noopener noreferrer">Open an issue</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>
