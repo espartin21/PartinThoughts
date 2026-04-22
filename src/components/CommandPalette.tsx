@@ -6,6 +6,7 @@ interface PaletteItem {
   href: string;
   excerpt: string;
   hay?: string;
+  action?: () => void;
 }
 
 interface Props {
@@ -14,19 +15,62 @@ interface Props {
 
 const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.userAgent);
 
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("pt-theme", next);
+  // Update the toggle button icons
+  const btn = document.querySelector("[data-theme-toggle]");
+  if (btn) {
+    const moon = btn.querySelector(".icon-moon") as HTMLElement;
+    const sun = btn.querySelector(".icon-sun") as HTMLElement;
+    if (moon) moon.style.display = next === "dark" ? "none" : "";
+    if (sun) sun.style.display = next === "dark" ? "" : "none";
+  }
+}
+
 export default function CommandPalette({ items }: Props) {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [q, setQ] = useState("");
   const [idx, setIdx] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const closePalette = useCallback(() => {
+    setClosing(true);
+    setQ("");
+    setIdx(0);
+    setTimeout(() => {
+      setOpen(false);
+      setClosing(false);
+    }, 200);
+  }, []);
+
+  const allItems = useMemo(() => {
+    const themeItem: PaletteItem = {
+      kind: "action",
+      title: "Toggle theme",
+      href: "",
+      excerpt: "Switch between light and dark mode",
+      hay: "theme dark light mode toggle",
+      action: toggleTheme,
+    };
+    return [...items, themeItem];
+  }, [items]);
+
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (!query) return items.slice(0, 9);
-    return items
+    if (!query) {
+      const pages = allItems.filter((it) => it.kind === "page");
+      const posts = allItems.filter((it) => it.kind === "essay").slice(0, 4);
+      const actions = allItems.filter((it) => it.kind === "action");
+      return [...pages, ...posts, ...actions];
+    }
+    return allItems
       .filter((it) => it.title.toLowerCase().includes(query) || (it.hay && it.hay.includes(query)))
       .slice(0, 12);
-  }, [q, items]);
+  }, [q, allItems]);
 
   const openPalette = useCallback(() => {
     setOpen(true);
@@ -54,7 +98,8 @@ export default function CommandPalette({ items }: Props) {
       const mod = isMac ? e.metaKey : e.ctrlKey;
       if (mod && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setOpen((o) => !o);
+        if (open) closePalette();
+        else setOpen(true);
         return;
       }
       if (!open) {
@@ -68,7 +113,7 @@ export default function CommandPalette({ items }: Props) {
         return;
       }
       if (e.key === "Escape") {
-        setOpen(false);
+        closePalette();
         return;
       }
       if (e.key === "ArrowDown") {
@@ -83,14 +128,15 @@ export default function CommandPalette({ items }: Props) {
         e.preventDefault();
         const it = filtered[idx];
         if (it) {
-          setOpen(false);
-          window.location.href = it.href;
+          closePalette();
+          if (it.action) it.action();
+          else window.location.href = it.href;
         }
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, filtered, idx, openPalette]);
+  }, [open, filtered, idx, openPalette, closePalette]);
 
   if (!open) return null;
 
@@ -102,8 +148,12 @@ export default function CommandPalette({ items }: Props) {
         zIndex: 70,
       }}
     >
-      <div className="palette-backdrop" onClick={() => setOpen(false)} />
-      <div className="palette-panel" role="dialog" aria-label="Search">
+      <div className={`palette-backdrop${closing ? " closing" : ""}`} onClick={closePalette} />
+      <div
+        className={`palette-panel${closing ? " closing" : ""}`}
+        role="dialog"
+        aria-label="Search"
+      >
         <div className="palette-input-wrap">
           <span className="palette-kbd">{isMac ? "\u2318K" : "Ctrl+K"}</span>
           <input
@@ -126,7 +176,7 @@ export default function CommandPalette({ items }: Props) {
               letterSpacing: "-0.01em",
             }}
           />
-          <button className="palette-close" onClick={() => setOpen(false)} aria-label="Close">
+          <button className="palette-close" onClick={closePalette} aria-label="Close">
             esc
           </button>
         </div>
@@ -139,8 +189,9 @@ export default function CommandPalette({ items }: Props) {
                 key={it.href}
                 aria-selected={i === idx}
                 onClick={() => {
-                  setOpen(false);
-                  window.location.href = it.href;
+                  closePalette();
+                  if (it.action) it.action();
+                  else window.location.href = it.href;
                 }}
               >
                 <span className="kind">{it.kind}</span>
