@@ -1,13 +1,17 @@
 <script>
   function initProgress() {
     const bar = document.getElementById("progress");
-    if (!bar) return;
+    if (!bar) {
+      return;
+    }
 
     bar.setAttribute("data-visible", "true");
 
     function onScroll() {
       const article = document.querySelector(".article");
-      if (!article) return;
+      if (!article) {
+        return;
+      }
       const rect = article.getBoundingClientRect();
       const total = article.scrollHeight - window.innerHeight;
       const scrolled = Math.max(0, -rect.top);
