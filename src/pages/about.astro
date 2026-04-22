@@ -1,6 +1,10 @@
 ---
 import Base from "../layouts/Base.astro";
 import { META } from "../types";
+import Mail from "../components/icons/Mail.astro";
+import LinkedIn from "../components/icons/LinkedIn.astro";
+import GitHub from "../components/icons/GitHub.astro";
+import RSS from "../components/icons/RSS.astro";
 ---
 
 <Base title="About" activeNav="about">
@@ -29,14 +33,32 @@ import { META } from "../types";
           </p>
           <p>
             Posts go out when they go out. There's no schedule. You can subscribe by{" "}
-            <a href="/rss.xml">RSS</a> or <a href="#">email</a> if you'd like a nudge.
+            <a href="/rss.xml">RSS</a> or <a href="mailto:espartin98@gmail.com">email</a> if you'd like
+            a nudge.
           </p>
         </div>
 
         <div class="about-links">
-          <a href="#">Email <span class="arr">&rarr;</span></a>
-          <a href="/rss.xml">RSS <span class="arr">&rarr;</span></a>
-          <a href="#">Are.na <span class="arr">&rarr;</span></a>
+          <a href="mailto:espartin98@gmail.com">
+            <span class="about-link-label"><Mail /> Email</span>
+            <span class="arr">&rarr;</span>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/ethan-partin"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="about-link-label"><LinkedIn /> LinkedIn</span>
+            <span class="arr">&rarr;</span>
+          </a>
+          <a href="https://github.com/espartin21" target="_blank" rel="noopener noreferrer">
+            <span class="about-link-label"><GitHub /> GitHub</span>
+            <span class="arr">&rarr;</span>
+          </a>
+          <a href="/rss.xml">
+            <span class="about-link-label"><RSS /> RSS</span>
+            <span class="arr">&rarr;</span>
+          </a>
         </div>
       </div>
     </section>
