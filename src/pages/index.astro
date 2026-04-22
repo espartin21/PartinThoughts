@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import PostList from "../components/PostList.astro";
 import { META } from "../types";
+import { readTime } from "../utils";
 
 const posts = (await getCollection("posts")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
@@ -14,13 +15,14 @@ const rest = posts.slice(1, 9);
 const fmt = (d: Date) =>
   d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-const featuredRead = Math.max(1, Math.ceil((featured.body?.split(/\s+/).length ?? 0) / 250));
+const featuredRead = readTime(featured.body);
 
 const restEntries = rest.map((p) => ({
   id: p.id,
   title: p.data.title,
   dateLabel: fmt(p.data.date),
   tag: p.data.tag,
+  readTime: readTime(p.body),
 }));
 ---
 

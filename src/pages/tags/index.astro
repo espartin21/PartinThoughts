@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import PostList from "../../components/PostList.astro";
 import { TAGS } from "../../types";
+import { readTime } from "../../utils";
 
 const posts = (await getCollection("posts")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
@@ -21,6 +22,7 @@ const allEntries = posts.map((p) => ({
   title: p.data.title,
   dateLabel: fmt(p.data.date),
   tag: p.data.tag,
+  readTime: readTime(p.body),
 }));
 ---
 
