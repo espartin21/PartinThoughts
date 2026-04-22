@@ -23,7 +23,9 @@ This is an Astro 6 static blog with React islands. It builds to pure static HTML
 
 **Content system:** Posts are Markdown files in `src/content/posts/` with typed frontmatter (title, date, tag, excerpt). The schema is defined in `src/content.config.ts` using Zod. Tags are constrained to "work", "living", "personal". Adding a post means creating a `.md` file — no other files need updating.
 
-**Layout hierarchy:** `Base.astro` wraps every page (head, fonts, masthead, footer, global components). `Post.astro` extends Base for article pages, adding reading progress and prev/next navigation.
+**Layout hierarchy:** `Base.astro` wraps every page (head, fonts, masthead, footer, global components). It pulls default title and description from `META.name` and `META.bio` in `src/types.ts`. `Post.astro` extends Base for article pages, adding reading progress and prev/next navigation.
+
+**RSS feed:** `src/pages/rss.xml.ts` generates an RSS feed at `/rss.xml` using `@astrojs/rss`. It includes all posts sorted by date. The `site` property in `astro.config.mjs` is required for absolute URLs in the feed.
 
 **Interactivity model:** Almost everything ships zero client JS. Interactive features use two approaches:
 

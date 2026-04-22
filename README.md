@@ -38,6 +38,16 @@ Your content here.
 
 No other files need updating.
 
+## Pages
+
+- `/` — homepage with featured post and recent feed
+- `/p/<slug>/` — individual post
+- `/archive/` — all posts
+- `/tags/` — browse by tag
+- `/about/` — about the author
+- `/colophon/` — how the site is built
+- `/rss.xml` — RSS feed
+
 ## Tech stack
 
 - **Astro 6** — static site generation
