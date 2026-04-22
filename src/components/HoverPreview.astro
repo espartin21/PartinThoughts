@@ -18,18 +18,24 @@ const previewData = posts
   }));
 ---
 
-<script define:vars={{ previewData }}>
+<script is:inline define:vars={{ previewData }}>
   function initHoverPreview() {
     const el = document.getElementById("preview");
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     let hideT;
 
     function handleEnter(e) {
       const t = e.target.closest("[data-preview-slug]");
-      if (!t) return;
+      if (!t) {
+        return;
+      }
       const slug = t.getAttribute("data-preview-slug");
       const post = previewData.find((p) => p.slug === slug);
-      if (!post) return;
+      if (!post) {
+        return;
+      }
       clearTimeout(hideT);
       el.innerHTML = `
         <div class="pv-meta">${post.dateLabel} · ${post.tag} · ${post.read} min read</div>
@@ -41,9 +47,13 @@ const previewData = posts
     }
 
     function handleLeave(e) {
-      if (!e.target.closest) return;
+      if (!e.target.closest) {
+        return;
+      }
       const t = e.target.closest("[data-preview-slug]");
-      if (!t) return;
+      if (!t) {
+        return;
+      }
       hideT = setTimeout(() => el.setAttribute("data-visible", "false"), 80);
     }
 
@@ -53,10 +63,18 @@ const previewData = posts
         ph = 120;
       let x = r.right + 12;
       let y = r.top;
-      if (x + pw > window.innerWidth - 16) x = r.left - pw - 12;
-      if (x < 8) x = Math.min(r.left, window.innerWidth - pw - 16);
-      if (y + ph > window.innerHeight - 16) y = window.innerHeight - ph - 16;
-      if (y < 8) y = 8;
+      if (x + pw > window.innerWidth - 16) {
+        x = r.left - pw - 12;
+      }
+      if (x < 8) {
+        x = Math.min(r.left, window.innerWidth - pw - 16);
+      }
+      if (y + ph > window.innerHeight - 16) {
+        y = window.innerHeight - ph - 16;
+      }
+      if (y < 8) {
+        y = 8;
+      }
       el.style.left = x + "px";
       el.style.top = y + "px";
     }

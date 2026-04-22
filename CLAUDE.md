@@ -17,6 +17,10 @@ npx astro check      # TypeScript type checking
 
 **Pre-commit hooks (husky):** ESLint, Prettier check, and `astro check` run automatically. Commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, etc.) — enforced by commitlint.
 
+## Code style
+
+**Curly braces:** All `if`/`else` statements must use curly braces, even for single-line bodies. Enforced by the `curly: ["error", "all"]` ESLint rule. Write `if (x) { return; }` not `if (x) return;`.
+
 ## Architecture
 
 This is an Astro 6 static blog with React islands. It builds to pure static HTML — no server runtime.

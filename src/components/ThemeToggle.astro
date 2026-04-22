@@ -1,14 +1,20 @@
 <script>
   function initThemeToggle() {
     const btn = document.querySelector("[data-theme-toggle]");
-    if (!btn) return;
+    if (!btn) {
+      return;
+    }
 
     function updateIcon() {
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
       const moon = btn!.querySelector(".icon-moon") as HTMLElement;
       const sun = btn!.querySelector(".icon-sun") as HTMLElement;
-      if (moon) moon.style.display = isDark ? "none" : "";
-      if (sun) sun.style.display = isDark ? "" : "none";
+      if (moon) {
+        moon.style.display = isDark ? "none" : "";
+      }
+      if (sun) {
+        sun.style.display = isDark ? "" : "none";
+      }
     }
 
     btn.addEventListener("click", () => {

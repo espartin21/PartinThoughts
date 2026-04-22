@@ -25,8 +25,12 @@ function toggleTheme() {
   if (btn) {
     const moon = btn.querySelector(".icon-moon") as HTMLElement;
     const sun = btn.querySelector(".icon-sun") as HTMLElement;
-    if (moon) moon.style.display = next === "dark" ? "none" : "";
-    if (sun) sun.style.display = next === "dark" ? "" : "none";
+    if (moon) {
+      moon.style.display = next === "dark" ? "none" : "";
+    }
+    if (sun) {
+      sun.style.display = next === "dark" ? "" : "none";
+    }
   }
 }
 
@@ -98,8 +102,11 @@ export default function CommandPalette({ items }: Props) {
       const mod = isMac ? e.metaKey : e.ctrlKey;
       if (mod && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        if (open) closePalette();
-        else setOpen(true);
+        if (open) {
+          closePalette();
+        } else {
+          setOpen(true);
+        }
         return;
       }
       if (!open) {
@@ -129,8 +136,11 @@ export default function CommandPalette({ items }: Props) {
         const it = filtered[idx];
         if (it) {
           closePalette();
-          if (it.action) it.action();
-          else window.location.href = it.href;
+          if (it.action) {
+            it.action();
+          } else {
+            window.location.href = it.href;
+          }
         }
       }
     }
@@ -138,7 +148,9 @@ export default function CommandPalette({ items }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, filtered, idx, openPalette, closePalette]);
 
-  if (!open) return null;
+  if (!open) {
+    return null;
+  }
 
   return (
     <div
@@ -190,8 +202,11 @@ export default function CommandPalette({ items }: Props) {
                 aria-selected={i === idx}
                 onClick={() => {
                   closePalette();
-                  if (it.action) it.action();
-                  else window.location.href = it.href;
+                  if (it.action) {
+                    it.action();
+                  } else {
+                    window.location.href = it.href;
+                  }
                 }}
               >
                 <span className="kind">{it.kind}</span>
