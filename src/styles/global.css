@@ -834,6 +834,9 @@ kbd {
   -webkit-backdrop-filter: blur(4px);
   animation: fadeIn 200ms var(--ease);
 }
+.palette-backdrop.closing {
+  animation: fadeOut 200ms var(--ease) forwards;
+}
 [data-theme="dark"] .palette-backdrop {
   background: oklch(0 0 0 / 0.55);
 }
@@ -849,6 +852,9 @@ kbd {
   box-shadow: 0 32px 80px -20px oklch(0 0 0 / 0.35);
   overflow: hidden;
   animation: palettePop 240ms var(--ease);
+}
+.palette-panel.closing {
+  animation: paletteDrop 200ms var(--ease) forwards;
 }
 .palette-input-wrap {
   display: flex;
@@ -989,6 +995,24 @@ kbd {
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes paletteDrop {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px) scale(0.98);
   }
 }
 @keyframes underline {
