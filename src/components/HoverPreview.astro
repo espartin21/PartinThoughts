@@ -60,15 +60,23 @@ const previewData = posts
 
     function positionPreview(target) {
       const r = target.getBoundingClientRect();
-      const pw = 320,
-        ph = 120;
+      const pw = 320;
+      const ph = el.offsetHeight || 120;
       let x = r.right + 12;
       let y = r.top;
-      if (x + pw > window.innerWidth - 16) {
+      const fitsRight = x + pw <= window.innerWidth - 16;
+      const fitsLeft = r.left - pw - 12 >= 8;
+      if (fitsRight) {
+        x = r.right + 12;
+      } else if (fitsLeft) {
         x = r.left - pw - 12;
-      }
-      if (x < 8) {
-        x = Math.min(r.left, window.innerWidth - pw - 16);
+      } else {
+        x = Math.max(8, r.left + (r.width - pw) / 2);
+        x = Math.min(x, window.innerWidth - pw - 8);
+        y = r.top - ph - 8;
+        if (y < 8) {
+          y = r.bottom + 8;
+        }
       }
       if (y + ph > window.innerHeight - 16) {
         y = window.innerHeight - ph - 16;
