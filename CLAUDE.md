@@ -27,9 +27,11 @@ This is an Astro 6 static blog with React islands. It builds to pure static HTML
 
 **Content system:** Posts are Markdown files in `src/content/posts/` with typed frontmatter (title, date, tag, excerpt). The schema is defined in `src/content.config.ts` using Zod. Tags are constrained to "work", "living", "personal". Adding a post means creating a `.md` file — no other files need updating.
 
-**Layout hierarchy:** `Base.astro` wraps every page (head, fonts, masthead, footer, global components). It pulls default title and description from `META.name` and `META.bio` in `src/types.ts`. `Post.astro` extends Base for article pages, adding reading progress and prev/next navigation.
+**Layout hierarchy:** `Base.astro` wraps every page (head, masthead, footer, global components). It pulls default title and description from `META.name` and `META.bio` in `src/types.ts`. It also generates Open Graph, Twitter card, and canonical URL meta tags for every page. `Post.astro` extends Base for article pages, adding reading progress and prev/next navigation.
 
-**RSS feed:** `src/pages/rss.xml.ts` generates an RSS feed at `/rss.xml` using `@astrojs/rss`. It includes all posts sorted by date. The `site` property in `astro.config.mjs` is required for absolute URLs in the feed.
+**Fonts:** Self-hosted as variable woff2 files in `public/fonts/` (Inter Tight and JetBrains Mono, Latin subset). Loaded via `@font-face` declarations at the top of `global.css` — no external font services.
+
+**RSS & Sitemap:** `src/pages/rss.xml.ts` generates an RSS feed at `/rss.xml` using `@astrojs/rss`. `@astrojs/sitemap` generates `/sitemap-index.xml` at build time. Both require the `site` property in `astro.config.mjs`.
 
 **Interactivity model:** Almost everything ships zero client JS. Interactive features use two approaches:
 
@@ -42,6 +44,8 @@ The `CommandPaletteIsland.astro` wrapper fetches all posts at build time and pas
 
 **Routing:** File-based. Dynamic routes (`p/[slug].astro`, `tags/[tag].astro`) use `getStaticPaths()` to generate all pages at build time. Post prev/next links are computed by sorting all posts by date in the slug page's `getStaticPaths`.
 
-**CSS:** Single global stylesheet (`src/styles/global.css`) using CSS custom properties and oklch colors. No component-scoped styles or CSS framework.
+**CSS:** Single global stylesheet (`src/styles/global.css`) using CSS custom properties and oklch colors. No component-scoped styles or CSS framework. Responsive breakpoints: 1024px (tablet — hides keyboard hints) and 640px (mobile — stacks masthead/footer, hides excerpts).
 
-**Shared constants:** `src/types.ts` exports `TAGS`, `META`, and the `Tag` type — the single source of truth for site metadata and valid tag values.
+**Icons:** SVG icon components live in `src/components/icons/` (Mail, LinkedIn, GitHub, RSS). Used on the about page social links.
+
+**Shared constants & utilities:** `src/types.ts` exports `TAGS`, `META` (including `birthDate`), and the `Tag` type. `src/utils.ts` exports `readTime(body)` for reading time calculation and `age(birthDate)` for computing age at build time.
