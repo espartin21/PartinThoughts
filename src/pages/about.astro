@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { META } from "../types";
+import { age } from "../utils";
 import Mail from "../components/icons/Mail.astro";
 import LinkedIn from "../components/icons/LinkedIn.astro";
 import GitHub from "../components/icons/GitHub.astro";
@@ -15,26 +16,27 @@ import RSS from "../components/icons/RSS.astro";
         <h1>About this place, and the person writing it.</h1>
         <div class="prose">
           <p>
-            Hi. I'm {META.author}. This is a small corner of the internet where I think out loud
-            &mdash; about the work I do, the life I'm living around it, and the odd observations
-            that don't fit anywhere else.
+            Hi. I'm {META.author}. I'm {age(META.birthDate)} years old, I'm a son, a brother, a friend,
+            a software engineer, a Catholic Christian, and more. I like to hang with my friends, ride
+            my motorcycle, and figure out how to make the most of this life God gave me.
           </p>
           <p>
-            I've worked in and around product teams for most of the last decade, which means I've
-            accumulated a lot of opinions about meetings, tools, and the specific flavor of
-            exhaustion that comes from too many open tabs. I write about that sometimes. I also
-            write about cooking, about moving cities, about the kind of quiet that's hard to come
-            by, and about what I'm learning to pay attention to.
+            While my life hasn't been that long, and my career has only just begun, I have a lot of
+            thoughts about both. I don't think my experience is unique, but I also don't think it's
+            universal. I want to write about it, and I want to write for the people who are living
+            through it with me.
           </p>
           <p>
-            The goal is not reach. The goal is to have a record &mdash; something I can read back in
-            five years and recognize. If you find your way here and something lands, that's the
-            bonus round.
+            I put off making this site for a long time, but finally worked up the courage to do it
+            in April 2026. Partin Thoughts is a place for me to write about the things I'm learning,
+            the things I'm struggling with, and the things I'm excited about. I don't have a grand
+            vision for it, and I don't think it needs one. This is a place for me to write, to
+            think, and to share. If it becomes something more than that, great. If not, that's fine
+            too.
           </p>
           <p>
-            Posts go out when they go out. There's no schedule. You can subscribe by{" "}
-            <a href="/rss.xml">RSS</a> or <a href="mailto:espartin98@gmail.com">email</a> if you'd like
-            a nudge.
+            Posts go out when they go out. There's no schedule, nor do I want there to be. You can
+            subscribe by{" "}<a href="/rss.xml">RSS</a>.
           </p>
         </div>
 
