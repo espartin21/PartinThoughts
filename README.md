@@ -47,6 +47,8 @@ No other files need updating.
 - `/about/` — about the author
 - `/colophon/` — how the site is built
 - `/rss.xml` — RSS feed
+- `/sitemap-index.xml` — sitemap for search engines
+- `/404.html` — custom not-found page
 
 ## Tech stack
 
