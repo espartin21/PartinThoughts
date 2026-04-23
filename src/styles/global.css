@@ -1090,8 +1090,7 @@ kbd {
   .searchbtn kbd,
   .palette-kbd,
   .palette-close,
-  .palette-foot,
-  .palette-results li .excerpt {
+  .palette-foot {
     display: none;
   }
 }
@@ -1119,6 +1118,9 @@ kbd {
   .nav-link {
     padding: 6px 8px;
     font-size: 12px;
+  }
+  .palette-results li .excerpt {
+    display: none;
   }
   .hero {
     padding: 72px 0 48px;
