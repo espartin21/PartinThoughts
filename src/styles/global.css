@@ -1086,6 +1086,16 @@ kbd {
 }
 
 /* ========== Responsive ========== */
+@media (max-width: 1024px) {
+  .searchbtn kbd,
+  .palette-kbd,
+  .palette-close,
+  .palette-foot,
+  .palette-results li .excerpt {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .shell {
     padding: 0 20px;
@@ -1109,10 +1119,6 @@ kbd {
   .nav-link {
     padding: 6px 8px;
     font-size: 12px;
-  }
-  .searchbtn kbd,
-  .palette-kbd {
-    display: none;
   }
   .hero {
     padding: 72px 0 48px;
