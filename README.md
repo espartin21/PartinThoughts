@@ -40,13 +40,6 @@ archived: true # retired — hidden in both dev and production
 Your content here.
 ```
 
-### Optional flags
-
-- **`draft`** — keeps a post out of production builds while still letting you preview it locally with `npm run dev`. Push the file up freely; it won't appear on the live site.
-- **`archived`** — hides the post in both dev and production. The markdown stays in the repo as a record but is fully off the site (homepage, archive, tags, RSS, sitemap, command palette, hover previews, and `/p/<slug>/`).
-
-Filtering happens in `getVisiblePosts()` in `src/utils.ts`, which is what every page uses to load posts.
-
 ## Pages
 
 - `/` — homepage with featured post and recent feed
