@@ -23,7 +23,7 @@ npx astro check      # TypeScript type checking
 
 ## Adding a post
 
-Create a markdown file in `src/content/posts/`:
+Create a markdown file in `src/content/posts/`. No other files need updating.
 
 ```markdown
 ---
@@ -31,24 +31,19 @@ title: "Your post title"
 date: 2026-04-19
 tag: work # work | living | personal
 excerpt: "A short description."
+
+# Optional flags (default false):
+draft: true # work in progress — visible only in `npm run dev`
+archived: true # retired — hidden in both dev and production
 ---
 
 Your content here.
 ```
 
-No other files need updating.
+### Optional flags
 
-### Drafts and archived posts
-
-The schema also accepts two optional booleans:
-
-```yaml
-draft: true # work in progress — visible only in `npm run dev`
-archived: true # retired — hidden in both dev and production
-```
-
-- `draft: true` keeps a post out of production builds while still letting you preview it locally with `npm run dev`. Push the file up freely; it won't appear on the live site.
-- `archived: true` hides the post in both dev and production. The markdown stays in the repo as a record but is fully off the site (homepage, archive, tags, RSS, sitemap, command palette, hover previews, and `/p/<slug>/`).
+- **`draft`** — keeps a post out of production builds while still letting you preview it locally with `npm run dev`. Push the file up freely; it won't appear on the live site.
+- **`archived`** — hides the post in both dev and production. The markdown stays in the repo as a record but is fully off the site (homepage, archive, tags, RSS, sitemap, command palette, hover previews, and `/p/<slug>/`).
 
 Filtering happens in `getVisiblePosts()` in `src/utils.ts`, which is what every page uses to load posts.
 
