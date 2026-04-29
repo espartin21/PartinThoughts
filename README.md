@@ -23,7 +23,7 @@ npx astro check      # TypeScript type checking
 
 ## Adding a post
 
-Create a markdown file in `src/content/posts/`:
+Create a markdown file in `src/content/posts/`. No other files need updating.
 
 ```markdown
 ---
@@ -31,12 +31,14 @@ title: "Your post title"
 date: 2026-04-19
 tag: work # work | living | personal
 excerpt: "A short description."
+
+# Optional flags (default false):
+draft: true # work in progress — visible only in `npm run dev`
+archived: true # retired — hidden in both dev and production
 ---
 
 Your content here.
 ```
-
-No other files need updating.
 
 ## Pages
 

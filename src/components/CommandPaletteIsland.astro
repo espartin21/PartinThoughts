@@ -1,10 +1,9 @@
 ---
-import { getCollection } from "astro:content";
 import CommandPalette from "./CommandPalette";
 import { TAGS } from "../types";
+import { getVisiblePosts } from "../utils";
 
-const posts = await getCollection("posts");
-const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const posts = await getVisiblePosts();
 
 const items = [
   { kind: "page", title: "Home", href: "/", excerpt: "Latest essays" },
@@ -12,7 +11,7 @@ const items = [
   { kind: "page", title: "Tags", href: "/tags/", excerpt: "Filter by topic" },
   { kind: "page", title: "About", href: "/about/", excerpt: "Who writes this" },
   { kind: "page", title: "Colophon", href: "/colophon/", excerpt: "How this site is built" },
-  ...sortedPosts.map((p) => ({
+  ...posts.map((p) => ({
     kind: "essay",
     title: p.data.title,
     href: `/p/${p.id}/`,

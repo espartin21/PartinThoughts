@@ -10,6 +10,8 @@ const posts = defineCollection({
     tag: z.enum(["work", "living", "personal"]),
     excerpt: z.string(),
     featured: z.boolean().optional().default(false),
+    draft: z.boolean().optional().default(false),
+    archived: z.boolean().optional().default(false),
   }),
 });
 

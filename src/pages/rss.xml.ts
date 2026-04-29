@@ -1,12 +1,10 @@
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
 import type { APIContext } from "astro";
 import { META } from "../types";
+import { getVisiblePosts } from "../utils";
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection("posts")).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-  );
+  const posts = await getVisiblePosts();
 
   return rss({
     title: META.name,

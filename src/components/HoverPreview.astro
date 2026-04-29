@@ -1,22 +1,19 @@
 ---
-import { getCollection } from "astro:content";
-import { readTime } from "../utils";
+import { getVisiblePosts, readTime } from "../utils";
 
-const posts = await getCollection("posts");
-const previewData = posts
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .map((p) => ({
-    slug: p.id,
-    title: p.data.title,
-    tag: p.data.tag,
-    excerpt: p.data.excerpt,
-    dateLabel: p.data.date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }),
-    read: readTime(p.body),
-  }));
+const posts = await getVisiblePosts();
+const previewData = posts.map((p) => ({
+  slug: p.id,
+  title: p.data.title,
+  tag: p.data.tag,
+  excerpt: p.data.excerpt,
+  dateLabel: p.data.date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }),
+  read: readTime(p.body),
+}));
 ---
 
 <script is:inline define:vars={{ previewData }}>
