@@ -27,6 +27,13 @@ This is an Astro 6 static blog with React islands. It builds to pure static HTML
 
 **Content system:** Posts are Markdown files in `src/content/posts/` with typed frontmatter (title, date, tag, excerpt). The schema is defined in `src/content.config.ts` using Zod. Tags are constrained to "work", "living", "personal". Adding a post means creating a `.md` file — no other files need updating.
 
+**Draft and archived posts:** The schema also accepts two optional booleans — `draft` and `archived`. Every page loads posts through `getVisiblePosts()` in `src/utils.ts` (not `getCollection("posts")` directly), which filters them out:
+
+- `draft: true` — hidden in production builds, **visible in `npm run dev`** for local preview. Use this for work-in-progress posts you want to push to the repo without publishing.
+- `archived: true` — hidden in **both** dev and production. The markdown stays in the repo as a record but is fully off the live site (homepage, archive, tags, RSS, sitemap, command palette, hover previews, and `/p/<slug>/`).
+
+When adding new code that reads posts, always use `getVisiblePosts()` rather than calling `getCollection("posts")` directly, otherwise drafts/archived posts will leak through.
+
 **Layout hierarchy:** `Base.astro` wraps every page (head, masthead, footer, global components). It pulls default title and description from `META.name` and `META.bio` in `src/types.ts`. It also generates Open Graph, Twitter card, and canonical URL meta tags for every page. `Post.astro` extends Base for article pages, adding reading progress and prev/next navigation.
 
 **Fonts:** Self-hosted as variable woff2 files in `public/fonts/` (Inter Tight and JetBrains Mono, Latin subset). Loaded via `@font-face` declarations at the top of `global.css` — no external font services.
