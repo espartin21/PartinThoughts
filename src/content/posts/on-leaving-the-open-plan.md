@@ -3,7 +3,6 @@ title: "On leaving the open plan"
 date: 2026-03-24
 tag: work
 excerpt: "After four years of hotdesks, I moved into a room with a door. The first week was disorienting in a way I didn't expect."
-featured: true
 ---
 
 For most of my career I worked in spaces where being seen was part of the job. Not in a performative sense — just ambiently. You could glance up and clock who was deep in something, who was stuck, who was free for a quick question. Collaboration by proximity.
