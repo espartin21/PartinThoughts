@@ -40,9 +40,9 @@ const allEntries = posts.map((p) => ({
             all <span class="count">{counts.all}</span>
           </a>
           {
-            TAGS.map((t) => (
+            TAGS.filter((t) => (counts[t] || 0) > 0).map((t) => (
               <a href={`/tags/${t}/`} class="tagchip" data-active="false">
-                #{t} <span class="count">{counts[t] || 0}</span>
+                #{t} <span class="count">{counts[t]}</span>
               </a>
             ))
           }

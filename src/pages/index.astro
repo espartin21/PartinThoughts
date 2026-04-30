@@ -50,14 +50,18 @@ const restEntries = rest.map((p) => ({
       </div>
     </section>
 
-    <section class="feed">
-      <div class="shell">
-        <div class="feed-head">
-          <span>Recent</span>
-          <a href="/archive/">All posts &rarr;</a>
-        </div>
-        <PostList posts={restEntries} />
-      </div>
-    </section>
+    {
+      rest.length > 0 && (
+        <section class="feed">
+          <div class="shell">
+            <div class="feed-head">
+              <span>Recent</span>
+              <a href="/archive/">All posts &rarr;</a>
+            </div>
+            <PostList posts={restEntries} />
+          </div>
+        </section>
+      )
+    }
   </main>
 </Base>
