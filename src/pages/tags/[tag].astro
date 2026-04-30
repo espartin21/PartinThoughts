@@ -4,8 +4,10 @@ import PostList from "../../components/PostList.astro";
 import { TAGS, type Tag } from "../../types";
 import { getVisiblePosts, readTime } from "../../utils";
 
-export function getStaticPaths() {
-  return TAGS.map((tag) => ({ params: { tag } }));
+export async function getStaticPaths() {
+  const posts = await getVisiblePosts();
+  const used = new Set(posts.map((p) => p.data.tag));
+  return TAGS.filter((tag) => used.has(tag)).map((tag) => ({ params: { tag } }));
 }
 
 const { tag } = Astro.params as { tag: Tag };
@@ -47,9 +49,9 @@ const entries = posts.map((p) => ({
             all <span class="count">{counts.all}</span>
           </a>
           {
-            TAGS.map((t) => (
+            TAGS.filter((t) => (counts[t] || 0) > 0).map((t) => (
               <a href={`/tags/${t}/`} class="tagchip" data-active={t === tag}>
-                #{t} <span class="count">{counts[t] || 0}</span>
+                #{t} <span class="count">{counts[t]}</span>
               </a>
             ))
           }
