@@ -1,6 +1,6 @@
-export type Tag = "work" | "living" | "personal";
+export const TAGS = ["work", "living", "personal"] as const;
 
-export const TAGS: Tag[] = ["work", "living", "personal"];
+export type Tag = (typeof TAGS)[number];
 
 export const META = {
   name: "Partin Thoughts",

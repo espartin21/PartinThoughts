@@ -1,13 +1,14 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { TAGS } from "./types";
 
 const posts = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    tag: z.enum(["work", "living", "personal"]),
+    tag: z.enum(TAGS),
     excerpt: z.string(),
     draft: z.boolean().optional().default(false),
     archived: z.boolean().optional().default(false),
