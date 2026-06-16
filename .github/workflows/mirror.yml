@@ -1,0 +1,32 @@
+name: Mirror to deploy repo
+
+# Pushes main to tristan957/ethan.partin.io so Vercel rebuilds the site.
+# Fires on every push to main (including merged PRs). Auth uses an SSH deploy
+# key (secret MIRROR_DEPLOY_KEY) scoped with write access to the target repo
+# only. The target branch below must match Vercel's production branch.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    name: Push main to deploy repo
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to tristan957/ethan.partin.io
+        env:
+          DEPLOY_KEY: ${{ secrets.MIRROR_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan github.com >>~/.ssh/known_hosts 2>/dev/null
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
+            git push --force git@github.com:tristan957/ethan.partin.io.git HEAD:master
