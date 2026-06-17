@@ -4,6 +4,6 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://thoughts.partin.io",
+  site: "https://ethan.partin.io",
   integrations: [react(), sitemap()],
 });
