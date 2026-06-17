@@ -67,6 +67,7 @@ body {
 }
 html {
   background: var(--bg);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -569,6 +570,7 @@ kbd {
   width: 1.6em;
   margin-left: -1.6em;
   vertical-align: 4px;
+  transition: color 180ms var(--ease);
 }
 .prose a {
   color: var(--accent-ink);
@@ -577,6 +579,22 @@ kbd {
 }
 .prose a:hover {
   border-bottom-color: var(--accent-ink);
+}
+/* Heading self-links (rehype-autolink-headings, behavior: "wrap"):
+   render as plain headings, hint interactivity on hover. */
+.prose a.heading-anchor {
+  color: inherit;
+  border-bottom: none;
+  transition: color 180ms var(--ease);
+}
+.prose a.heading-anchor:hover {
+  color: var(--accent-ink);
+}
+.prose h2:hover::before {
+  color: var(--accent-ink);
+}
+.prose :is(h1, h2, h3, h4) {
+  scroll-margin-top: 1.5rem;
 }
 .prose blockquote {
   margin: 1.6em 0;
@@ -1155,5 +1173,8 @@ kbd {
   * {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }
