@@ -9,6 +9,10 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 export default defineConfig({
   site: "https://ethan.partin.io",
   integrations: [react(), sitemap()],
+  // Astro 7 defaults to JSX whitespace rules ("jsx"), which drop the spaces
+  // between inline elements our templates rely on (e.g. masthead, post meta).
+  // `true` is Astro 6's lossless compression and keeps the rendered output.
+  compressHTML: true,
   markdown: {
     // Give every heading an id (rehypeSlug), then make the whole heading a
     // self-link to that id (rehypeAutolinkHeadings, behavior: "wrap"). Order
